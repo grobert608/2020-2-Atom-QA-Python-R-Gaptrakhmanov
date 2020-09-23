@@ -1,0 +1,1 @@
+# 2020-2-Atom-QA-Python-R-Gaptrakhmanov
