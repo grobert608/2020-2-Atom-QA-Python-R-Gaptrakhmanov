@@ -1,2 +1,6 @@
 pytest
 pytest-xdist
+selenium
+webdriver-manager
+allure-pytest
+requests
