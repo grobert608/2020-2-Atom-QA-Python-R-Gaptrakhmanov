@@ -1,0 +1,16 @@
+overload:
+  enabled: true
+  token_file: /var/loadtest/token.txt
+  package: yandextank.plugins.DataUploader
+  job_name: Gaptrakhmanov_step
+  job_dsc: Gaptrakhmanov_step_1_10_60
+phantom:
+  address: jsonplaceholder.typicode.com
+  ammofile: /var/loadtest/ammo.txt
+  load_profile:
+    load_type: rps
+    schedule: step(1, 10, 5, 1m)
+console:
+  enabled: false
+telegraf:
+  enabled: false

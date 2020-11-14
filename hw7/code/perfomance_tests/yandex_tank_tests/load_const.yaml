@@ -1,0 +1,16 @@
+overload:
+  enabled: true
+  token_file: /var/loadtest/token.txt
+  package: yandextank.plugins.DataUploader
+  job_name: Gaptrakhmanov_const
+  job_dsc: Gaptrakhmanov_const_2_30
+phantom:
+  address: jsonplaceholder.typicode.com
+  ammofile: /var/loadtest/ammo.txt
+  load_profile:
+    load_type: rps
+    schedule: const(2, 30)
+console:
+  enabled: false
+telegraf:
+  enabled: false
