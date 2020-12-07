@@ -1,0 +1,10 @@
+pytest
+pytest-xdist
+requests
+selenium
+webdriver-manager
+SQLAlchemy
+Faker
+Flask
+PyMySQL
+allure-pytest
