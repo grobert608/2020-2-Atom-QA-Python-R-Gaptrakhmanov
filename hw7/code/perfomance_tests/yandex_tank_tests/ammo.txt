@@ -1,0 +1,7 @@
+[Connection: close]
+[Host: jsonplaceholder.typicode.com]
+/posts
+
+[Connection: close]
+[Host: jsonplaceholder.typicode.com]
+/comments
