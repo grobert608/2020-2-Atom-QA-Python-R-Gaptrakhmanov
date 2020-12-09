@@ -1,7 +1,9 @@
-pytest
+pytest~=6.0.2
 pytest-xdist
-selenium
+selenium~=3.141.0
 webdriver-manager
 allure-pytest
+requests~=2.24.0
+Flask~=1.1.2
 requests
 argparse
