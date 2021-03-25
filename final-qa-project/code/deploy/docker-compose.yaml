@@ -1,0 +1,61 @@
+version: '3.3'
+services:
+  db:
+    network_mode: bridge
+    container_name: "db"
+    image: mysql:latest
+    restart: always
+    environment:
+      MYSQL_ROOT_USER: root
+      MYSQL_ROOT_PASSWORD: root
+      MYSQL_USER: root
+      MYSQL_PASSWORD: root
+    command: --init-file /data/application/init.sql
+    volumes:
+      - /Users/robert/PycharmProjects/final-qa-project/code/deploy/config/init.sql:/data/application/init.sql
+    ports:
+      - '3306:3306'
+    expose:
+      - '3306'
+    security_opt:
+      - seccomp:unconfined
+    healthcheck:
+      test: mysqladmin ping -h 127.0.0.1 -u root -password=root
+      timeout: 30s
+      retries: 30
+  selenoid:
+    network_mode: bridge
+    image: aerokube/selenoid
+    container_name: "selenoid"
+    volumes:
+      - "/Users/robert/PycharmProjects/final-qa-project/code/deploy/selenoid:/etc/selenoid"
+      - "/var/run/docker.sock:/var/run/docker.sock"
+      - "/Users/robert/PycharmProjects/final-qa-project/code/deploy/selenoid/video:/opt/selenoid/video"
+      - "/Users/robert/Py charmProjects/final-qa-project/code/deploy/selenoid/logs:/opt/selenoid/logs"
+    environment:
+      - OVERRIDE_VIDEO_OUTPUT_DIR=/Users/robert/PycharmProjects/final-qa-project/code/deploy/selenoid/video
+    command: ["-conf", "/etc/selenoid/browsers.json", "-video-output-dir", "/opt/selenoid/video", "-log-output-dir", "/opt/selenoid/logs"]
+    ports:
+      - "4444:4444"
+  vk_mock:
+    network_mode: bridge
+    container_name: "vk_mock"
+    build: mock/
+    ports:
+      - '5000:5000'
+  app:
+    network_mode: bridge
+    container_name: "app"
+    image: myapp
+    volumes:
+      - /Users/robert/PycharmProjects/final-qa-project/code/deploy/config:/config
+    ports:
+      - '8083:8083'
+    links:
+      - "db:db"
+      - "vk_mock:vk_mock"
+    command: /app/myapp --config=/config/config.txt
+    depends_on:
+      - vk_mock
+      - db
+      - selenoid
